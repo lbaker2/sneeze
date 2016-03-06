@@ -1,4 +1,4 @@
-module.exports = (function(window, document){
+module.exports = (function(){
   var request = require('superagent');
 
   var _sneeze = {};
@@ -32,8 +32,8 @@ module.exports = (function(window, document){
     }
     errorInfo.event = source.split('(')[0].trim();
     errorInfo.source = source.split('(')[1].trim();
-    errorInfo.lineno = src[src.length-2].trim();
-    errorInfo.colno = src[src.length-1].trim();
+    errorInfo.lineno = parseInt(src[src.length-2].trim());
+    errorInfo.colno = parseInt(src[src.length-1].trim().replace(')', ''));
     errorInfo.stack = stack.trim();
 
     request.post(this._config.url)
@@ -43,12 +43,23 @@ module.exports = (function(window, document){
 
   _sneeze.listen = function(cb){
     var self = this;
-    window.onerror = function(message, source, lineno, colno, error){
-      self.log(error);
-      if(cb){
-        cb(error);
+
+    if(typeof window != 'undefined'){
+      window.onerror = function(message, source, lineno, colno, error){
+        self.log(error);
+        if(cb){
+          cb(error);
+        }
       }
+    }else{
+      process.on('uncaughtException', function(err){
+        self.log(error);
+        if(cb){
+          cb(error);
+        }
+      });
     }
+    
   }
 
   _sneeze.catch = function(fn, cb){
@@ -61,4 +72,4 @@ module.exports = (function(window, document){
   }
 
   return _sneeze;
-})(window, document);
+})();

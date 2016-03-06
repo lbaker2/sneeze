@@ -1,5 +1,5 @@
 // deps [superagent]
-window.Sneeze = (function(window, Request){
+var Sneeze = (function(Request){
   var request = Request;
 
   var _sneeze = {};
@@ -44,12 +44,23 @@ window.Sneeze = (function(window, Request){
 
   _sneeze.listen = function(cb){
     var self = this;
-    window.onerror = function(message, source, lineno, colno, error){
-      self.log(error);
-      if(cb){
-        cb(error);
+
+    if(typeof window != 'undefined'){
+      window.onerror = function(message, source, lineno, colno, error){
+        self.log(error);
+        if(cb){
+          cb(error);
+        }
       }
+    }else{
+      process.on('uncaughtException', function(err){
+        self.log(error);
+        if(cb){
+          cb(error);
+        }
+      });
     }
+    
   }
 
   _sneeze.catch = function(fn, cb){
@@ -62,4 +73,4 @@ window.Sneeze = (function(window, Request){
   }
 
   return _sneeze;
-})(window, Request);
+})(Request);
