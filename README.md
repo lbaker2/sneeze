@@ -3,7 +3,6 @@ Log you client side errors in a helpful manner
 
 # running the example
 
-* npm install -g express
 * npm install
 * cd example/sickapp
 * npm install
