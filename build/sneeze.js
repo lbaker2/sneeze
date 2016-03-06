@@ -11,7 +11,7 @@ var Sneeze = (function(Request){
   _sneeze.configure = function(configuration){
     configuration = configuration || {};
     this._config = this._config || {};
-    this._config.url = configuration.url || this._config.url || '/sneeze';
+    this._config.url = configuration.url || this._config.url || '/errors';
     // any other configurations can go here
   }
 
