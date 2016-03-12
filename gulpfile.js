@@ -1,11 +1,12 @@
+var browserify = require('browserify');
 var gulp = require('gulp');
-var browserify = require('gulp-browserify');
-
-gulp.task('js', function(){
-	gulp.src('src/sneeze.js')
-		.pipe(browserify({
-			insertGlobals: true,
-			debug: true
-		}))
-		.pipe(gulp.dest('./build'));
+var source = require('vinyl-source-stream');
+ 
+gulp.task('browserify', function() {
+  return browserify('./src/sneeze.js')
+      .bundle()
+      //Pass desired output filename to vinyl-source-stream
+      .pipe(source('sneeze-built.js'))
+      // Start piping stream to tasks!
+      .pipe(gulp.dest('./build/'));
 });

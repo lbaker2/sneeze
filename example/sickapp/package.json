@@ -16,8 +16,8 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "browserify": "^13.0.0",
     "gulp": "^3.9.1",
-    "gulp-browserify": "^0.5.1",
-    "gulp-watch": "^4.3.5"
+    "vinyl-source-stream": "^1.1.0"
   }
 }

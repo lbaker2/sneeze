@@ -20,8 +20,18 @@
   },
   "homepage": "https://github.com/lbaker2/sneeze#readme",
   "devDependencies": {
+    "browserify": "^13.0.0",
     "gulp": "^3.9.1",
-    "gulp-browserify": "^0.5.1"
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-browserify": "^5.0.2",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-ie-launcher": "^0.2.0",
+    "karma-jasmine": "^0.3.7",
+    "karma-safari-launcher": "^0.1.1",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "superagent": "^1.7.2"
