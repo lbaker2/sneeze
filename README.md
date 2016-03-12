@@ -9,3 +9,5 @@ Log you client side errors in a helpful manner
 * npm start
 
 Should see logging of requests to the express server. Click the button (it will programmatically trigger an error). Verify the express server got the error (it should log the error)
+
+Versions supporting commonjs require/exports and a built version for those who want to roll without that jazz.
