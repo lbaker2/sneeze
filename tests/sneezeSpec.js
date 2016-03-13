@@ -28,7 +28,7 @@ describe('Sneeze', function(){
 	describe('configuring Sneeze', function(){
 		var configurations = {
 			url: '/foo',
-			extras: { 'keywords': ['foo', 'bar'] }
+			data: { 'keywords': ['foo', 'bar'] }
 		}
 
 		it('configures Sneeze error path to \'/errors\' by default', function(){
@@ -46,95 +46,158 @@ describe('Sneeze', function(){
 		});
 
 		it('can store extra information to be sent to the server', function(){
-			expect(Sneeze.getConfig().extras).toBe(configurations.extras);
+			expect(Sneeze.getConfig().data).toBe(configurations.data);
 		});
 
 		describe('extra information to be sent', function(){
 			it('can be a function', function(){
 				var extra = function(){};
-				Sneeze.configure({extras: extra});
-				expect(Sneeze.getConfig().extras).toBe(extra);
+				Sneeze.configure({data: extra});
+				expect(Sneeze.getConfig().data).toBe(extra);
 			});
 
 			it('can be a plain object', function(){
 				var extra = {};
-				Sneeze.configure({extras: extra});
-				expect(Sneeze.getConfig().extras).toBe(extra);
+				Sneeze.configure({data: extra});
+				expect(Sneeze.getConfig().data).toBe(extra);
 			});
 		});
 	});
 
 	describe('logging errors', function(){
-		it('returns early if sneeze is not enabled', function(){
-			pending();
+		var configuration = { data: function(error){ return 'Foo'} },
+				err;
+
+		beforeEach(function(){
+			Sneeze.enable();
+			err = new Error('Test Error');
+			spyOn(Sneeze, 'sendError');
+			spyOn(Sneeze, 'getErrorInfo').and.returnValue({});
 		});
-		it('expects an error like object', function(){
-			pending();
+		
+		it('returns early if sneeze is not enabled', function(){
+			Sneeze.disable();
+			expect(Sneeze.log(err)).toBe(false);
 		});
 		it('parses an error passed in', function(){
-			pending();
+			Sneeze.log(err);
+			expect(Sneeze.getErrorInfo).toHaveBeenCalled();
 		});
 		it('adds any additional information desired', function(){
-			pending();
+			spyOn(Sneeze, 'getAdditionalData');
+			Sneeze.log(err);
+			expect(Sneeze.getAdditionalData).toHaveBeenCalled();
 		});
 		it('sends the error to the server', function(){
-			pending();
+			Sneeze.log(err);
+			expect(Sneeze.sendError).toHaveBeenCalled();
 		});
 		describe('a failed response', function(){
 			it('sets sneeze to disabled', function(){
-				pending();
+				spyOn(Sneeze, 'disable').and.callThrough();
+				Sneeze.sendError.and.callFake(function(){ throw new Error('Something bad happened when sending the error')});
+				Sneeze.log(err);
+				expect(Sneeze.disable).toHaveBeenCalled();
 			});		
 		});
 	});
 
 	describe('parsing errors', function(){
+		var err = { stack: 'Error: This is an error\n    at Error (native)\n    at HTMLButtonElement.module.exports.btn.onclick (http://test.com/test.js:1:1)'};
+
 		it('expects an error like object', function(){
-			pending();
+			expect(function(){ Sneeze.getErrorInfo() }).toThrow();
 		});
-		it('returns an object', function(){
-			pending();
-		});
-		it('returns the script source of the error', function(){
-			pending();
-		});
-		it('returns the line number of the error', function(){
-			pending();
-		});
-		it('returns the col number of the error', function(){
-			pending();
-		});
-		it('returns the browser information', function(){
-			pending();
-		});
-		it('returns the error stack', function(){
-			pending();
+
+		describe('returned information', function(){
+			var resp;
+			beforeEach(function(){
+				resp = Sneeze.getErrorInfo(err)
+			});
+			it('is an object', function(){
+				expect(typeof resp).toBe('object');
+			});
+			it('includes the script source of the error', function(){
+				expect(resp.source).toBeDefined();
+			});
+			it('includes the line number of the error', function(){
+				expect(resp.lineno).toBeDefined();
+			});
+			it('includes the col number of the error', function(){
+				expect(resp.colno).toBeDefined();
+			});
+			it('includes the browser information', function(){
+				expect(resp.browser).toBeDefined();
+			});
+			it('includes the error stack', function(){
+				expect(resp.stack).toBeDefined();
+			});
 		});
 	});
 
 	describe('setting up a global error handler', function(){
+		var called = false, callback = function(){ called = true;};
+
+		beforeEach(function(){
+			spyOn(Sneeze, 'log');
+			spyOn(Sneeze, 'processError').and.callThrough();
+			called = false;
+			jasmine.CATCH_EXCEPTIONS = false;
+			Sneeze.listen(callback);
+		});
+
+		afterEach(function(){
+			jasmine.CATCH_EXCEPTIONS = true;
+			window.onerror = function(){};
+		});
+
 		it('listens for errors on the window object', function(){
-			pending();
+			
+			window.onerror.call(window);
+			expect(Sneeze.processError).toHaveBeenCalled();
 		});
 		it('logs the error', function(){
-			pending();
+			window.onerror.call(window);
+			expect(Sneeze.log).toHaveBeenCalled();
 		});
 		it('can execute a callback', function(){
-			pending();
+			window.onerror.call(window);
+			expect(called).toBe(true);
 		});
 	});
 
 	describe('setting up an error handler for a scoped set of logic', function(){
+
+		var badCalled = false,
+				badFn = function(){ badCalled = true; throw new Error('Bad!')},
+				called = false,
+				callback = function(){ called = true; };
+
+		beforeEach(function(){
+			called = false;
+			badCalled= false;
+			spyOn(Sneeze, 'log');
+			spyOn(Sneeze, 'processError');
+			Sneeze.listen();
+			Sneeze.catch(badFn, callback);
+		});
+
+		afterEach(function(){
+			jasmine.CATCH_EXCEPTIONS = true;
+			window.onerror = function(){};
+		});
+
 		it('will execute a block of code given as the first argument', function(){
-			pending();
+			expect(badCalled).toBe(true);
 		});
 		it('logs any errors', function(){
-			pending();
+			expect(Sneeze.log).toHaveBeenCalled();
 		});
 		it('prevents global error handler from logging the error', function(){
-			pending();
+			expect(Sneeze.processError).not.toHaveBeenCalled();
 		})
 		it('can execute a callback', function(){
-			pending();
+			expect(called).toBe(true);
 		});
 	});
 

@@ -1478,6 +1478,7 @@ module.exports = (function(){
   var request = require('superagent');
 
   var _sneeze = {};
+  var config;
 
   _sneeze.enabled = true;
 
@@ -1505,9 +1506,42 @@ module.exports = (function(){
 
   _sneeze.configure = function(configuration){
     configuration = configuration || {};
-    this._config = this._config || {};
-    this._config.url = configuration.url || this._config.url || '/errors';
+    config = config || {};
+    config.url = configuration.url || config.url || '/errors';
+    config.data = configuration.data || config.data;
     // any other configurations can go here
+  }
+
+  // returns a shallow copy of the configuration
+  _sneeze.getConfig = function(){
+    var configuration;
+    if(config){
+      configuration = {};
+      for(var attr in config){
+        configuration[attr] = config[attr];
+      }
+    }
+    return configuration;
+  }
+
+  _sneeze.getAdditionalData = function(error, options){
+    if(options.data && options.data instanceof Function){
+      return options.data(error);
+    }
+    return options.data;
+  }
+
+  // will return options, comparing the options with _config, and fills the missing pieces of the options hash with _config values
+  // will return options if _config is not defined
+  _sneeze.extendOptions = function(options){
+    if(config){
+      return options;
+    }
+    for(var attrName in config){
+      if(typeof options[attrName] == 'undefined'){
+        options[attrName] = config[attrName];
+      }
+    }
   }
 
   /*
@@ -1515,24 +1549,36 @@ module.exports = (function(){
     - Will attempt to post to the server as long as a valid response is returned
     - Will not attempt further logging if a request to the server returns an error
   */
-  _sneeze.log = function(error){
-    if(!this.enabled){
-      return;
+  _sneeze.log = function(error, options){
+    if(!this._enabled){
+      return false;
     }
+
+    options = options || {};
+
+    this.extendOptions(options);
     
     var errorInfo = this.getErrorInfo(error);
 
+    errorInfo.data = this.getAdditionalData(error, options);
+
     try{
-      request.post(this._config.url)
-        .send(errorInfo)
-        .end(function(err, response){
-          if(err){
-            _sneeze.enabled = false;
-          }
-        });
+      this.sendError(errorInfo, options);
     }catch(e){
-      this.enable = false
+      _sneeze.disable();
     }
+
+    return true;
+  }
+
+  _sneeze.sendError = function(info, options){
+    request.post(options.url)
+      .send(info)
+      .end(function(err, response){
+        if(err){
+          _sneeze.disable();
+        }
+      });
   }
 
   /*
@@ -1576,41 +1622,47 @@ module.exports = (function(){
     - accepts a callback function, but does not wait for sneeze to send the error to the server
   */
 
-  _sneeze.listen = function(cb){
+  _sneeze.listen = function(cb, options){
     var self = this;
-
     if(typeof window != 'undefined'){
       window.onerror = function(message, source, lineno, colno, error){
-        self.log(error);
-        if(cb){
-          cb(error);
-        }
+        self.processError(error, cb, options);
       }
     }else{
-      process.on('uncaughtException', function(err){
-        self.log(error);
-        if(cb){
-          cb(error);
-        }
+      process.on('uncaughtException', function(error){
+        self.processError(error, cb, options);
       });
     }
-    
   }
 
+  _sneeze.processError = function(error, cb, options){
+    this.log(error, options);
+    if(cb){
+      cb(error, options);
+    }
+  }
   /* 
     - Attempts a function and catches any errors. 
     - Will execute a callback if passed, but does not wait for sneeze to send the error to the server
   */
-  _sneeze.catch = function(fn, cb){
+  _sneeze.catch = function(fn, cb, options){
     var self = this;
     try{
       fn();
     }catch(e){
-      self.log(e);
+      self.log(e, options);
       if(cb){
-        cb(e);
+        cb(e, options);
       }
     }
+  }
+
+  _sneeze.enable = function(){
+    this._enabled = true;
+  }
+
+  _sneeze.disable = function(){
+    this._enabled = false;
   }
 
   /* 

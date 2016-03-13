@@ -32,7 +32,7 @@ module.exports = (function(){
     configuration = configuration || {};
     config = config || {};
     config.url = configuration.url || config.url || '/errors';
-    config.extras = configuration.extras || config.extras;
+    config.data = configuration.data || config.data;
     // any other configurations can go here
   }
 
@@ -46,6 +46,13 @@ module.exports = (function(){
       }
     }
     return configuration;
+  }
+
+  _sneeze.getAdditionalData = function(error, options){
+    if(options.data && options.data instanceof Function){
+      return options.data(error);
+    }
+    return options.data;
   }
 
   // will return options, comparing the options with _config, and fills the missing pieces of the options hash with _config values
@@ -67,8 +74,8 @@ module.exports = (function(){
     - Will not attempt further logging if a request to the server returns an error
   */
   _sneeze.log = function(error, options){
-    if(!this.enabled){
-      return;
+    if(!this._enabled){
+      return false;
     }
 
     options = options || {};
@@ -77,17 +84,25 @@ module.exports = (function(){
     
     var errorInfo = this.getErrorInfo(error);
 
+    errorInfo.data = this.getAdditionalData(error, options);
+
     try{
-      request.post(options.url)
-        .send(errorInfo)
-        .end(function(err, response){
-          if(err){
-            _sneeze.enabled = false;
-          }
-        });
+      this.sendError(errorInfo, options);
     }catch(e){
-      this.enable = false
+      _sneeze.disable();
     }
+
+    return true;
+  }
+
+  _sneeze.sendError = function(info, options){
+    request.post(options.url)
+      .send(info)
+      .end(function(err, response){
+        if(err){
+          _sneeze.disable();
+        }
+      });
   }
 
   /*
@@ -133,25 +148,23 @@ module.exports = (function(){
 
   _sneeze.listen = function(cb, options){
     var self = this;
-
     if(typeof window != 'undefined'){
       window.onerror = function(message, source, lineno, colno, error){
-        self.log(error, options);
-        if(cb){
-          cb(error, options);
-        }
+        self.processError(error, cb, options);
       }
     }else{
-      process.on('uncaughtException', function(err){
-        self.log(error, options);
-        if(cb){
-          cb(error, options);
-        }
+      process.on('uncaughtException', function(error){
+        self.processError(error, cb, options);
       });
     }
-    
   }
 
+  _sneeze.processError = function(error, cb, options){
+    this.log(error, options);
+    if(cb){
+      cb(error, options);
+    }
+  }
   /* 
     - Attempts a function and catches any errors. 
     - Will execute a callback if passed, but does not wait for sneeze to send the error to the server
@@ -166,6 +179,14 @@ module.exports = (function(){
         cb(e, options);
       }
     }
+  }
+
+  _sneeze.enable = function(){
+    this._enabled = true;
+  }
+
+  _sneeze.disable = function(){
+    this._enabled = false;
   }
 
   /* 
