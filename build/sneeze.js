@@ -2,6 +2,7 @@ module.exports = (function(){
   var request = require('superagent');
 
   var _sneeze = {};
+  var config;
 
   _sneeze.enabled = true;
 
@@ -29,9 +30,35 @@ module.exports = (function(){
 
   _sneeze.configure = function(configuration){
     configuration = configuration || {};
-    this._config = this._config || {};
-    this._config.url = configuration.url || this._config.url || '/errors';
+    config = config || {};
+    config.url = configuration.url || config.url || '/errors';
+    config.extras = configuration.extras || config.extras;
     // any other configurations can go here
+  }
+
+  // returns a shallow copy of the configuration
+  _sneeze.getConfig = function(){
+    var configuration;
+    if(config){
+      configuration = {};
+      for(var attr in config){
+        configuration[attr] = config[attr];
+      }
+    }
+    return configuration;
+  }
+
+  // will return options, comparing the options with _config, and fills the missing pieces of the options hash with _config values
+  // will return options if _config is not defined
+  _sneeze.extendOptions = function(options){
+    if(config){
+      return options;
+    }
+    for(var attrName in config){
+      if(typeof options[attrName] == 'undefined'){
+        options[attrName] = config[attrName];
+      }
+    }
   }
 
   /*
@@ -39,15 +66,19 @@ module.exports = (function(){
     - Will attempt to post to the server as long as a valid response is returned
     - Will not attempt further logging if a request to the server returns an error
   */
-  _sneeze.log = function(error){
+  _sneeze.log = function(error, options){
     if(!this.enabled){
       return;
     }
+
+    options = options || {};
+
+    this.extendOptions(options);
     
     var errorInfo = this.getErrorInfo(error);
 
     try{
-      request.post(this._config.url)
+      request.post(options.url)
         .send(errorInfo)
         .end(function(err, response){
           if(err){
@@ -100,21 +131,21 @@ module.exports = (function(){
     - accepts a callback function, but does not wait for sneeze to send the error to the server
   */
 
-  _sneeze.listen = function(cb){
+  _sneeze.listen = function(cb, options){
     var self = this;
 
     if(typeof window != 'undefined'){
       window.onerror = function(message, source, lineno, colno, error){
-        self.log(error);
+        self.log(error, options);
         if(cb){
-          cb(error);
+          cb(error, options);
         }
       }
     }else{
       process.on('uncaughtException', function(err){
-        self.log(error);
+        self.log(error, options);
         if(cb){
-          cb(error);
+          cb(error, options);
         }
       });
     }
@@ -125,14 +156,14 @@ module.exports = (function(){
     - Attempts a function and catches any errors. 
     - Will execute a callback if passed, but does not wait for sneeze to send the error to the server
   */
-  _sneeze.catch = function(fn, cb){
+  _sneeze.catch = function(fn, cb, options){
     var self = this;
     try{
       fn();
     }catch(e){
-      self.log(e);
+      self.log(e, options);
       if(cb){
-        cb(e);
+        cb(e, options);
       }
     }
   }
