@@ -58,8 +58,8 @@ module.exports = (function(){
   // will return options, comparing the options with _config, and fills the missing pieces of the options hash with _config values
   // will return options if _config is not defined
   _sneeze.extendOptions = function(options){
-    if(config){
-      return options;
+    if(!config){
+      this.configure();
     }
     for(var attrName in config){
       if(typeof options[attrName] == 'undefined'){
