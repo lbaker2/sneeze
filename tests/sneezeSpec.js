@@ -65,7 +65,7 @@ describe('Sneeze', function(){
 	});
 
 	describe('logging errors', function(){
-		var configuration = { data: function(error){ return 'Foo'} },
+		var configuration = { data: function(error){ return 'foo' }},
 				err;
 
 		beforeEach(function(){
@@ -84,7 +84,7 @@ describe('Sneeze', function(){
 			expect(Sneeze.getErrorInfo).toHaveBeenCalled();
 		});
 		it('adds any additional information desired', function(){
-			spyOn(Sneeze, 'getAdditionalData');
+			spyOn(Sneeze, 'getAdditionalData').and.callThrough();
 			Sneeze.log(err);
 			expect(Sneeze.getAdditionalData).toHaveBeenCalled();
 		});
@@ -99,6 +99,31 @@ describe('Sneeze', function(){
 				Sneeze.log(err);
 				expect(Sneeze.disable).toHaveBeenCalled();
 			});		
+		});
+	});
+
+	describe('additional information', function(){
+		describe('as a function', function(){
+			var obj = {}, err = new Error('Test Error'), options, data;
+			obj.myFn = function(error){ return 'foo' };
+
+			beforeEach(function(){
+				spyOn(obj, 'myFn').and.callThrough();
+				options = { data: obj.myFn }
+				data = Sneeze.getAdditionalData(err, options);
+			});
+
+			it('will call the function with the error passed to getAdditionalData', function(){
+				expect(obj.myFn).toHaveBeenCalledWith(err);
+			});
+
+			it('returns the result of the function', function(){
+				expect(data).toBe('foo');
+			});
+		});
+
+		it('can be anything else', function(){
+			expect(Sneeze.getAdditionalData(new Error(), {data:'foo'})).toBe('foo');
 		});
 	});
 

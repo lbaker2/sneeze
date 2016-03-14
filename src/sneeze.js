@@ -4,6 +4,11 @@ module.exports = (function(){
   var _sneeze = {};
   var config;
 
+  var isFunction = function(functionToCheck) {
+   var getType = {};
+   return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+  }
+
   _sneeze.enabled = true;
 
   /*
@@ -49,7 +54,7 @@ module.exports = (function(){
   }
 
   _sneeze.getAdditionalData = function(error, options){
-    if(options.data && options.data instanceof Function){
+    if(options.data && isFunction(options.data)){
       return options.data(error);
     }
     return options.data;
