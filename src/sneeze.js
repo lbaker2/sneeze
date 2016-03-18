@@ -4,6 +4,11 @@ module.exports = (function(){
   var _sneeze = {};
   var config;
 
+  var isFunction = function(functionToCheck) {
+   var getType = {};
+   return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+  }
+
   _sneeze.enabled = true;
 
   /*
@@ -49,7 +54,7 @@ module.exports = (function(){
   }
 
   _sneeze.getAdditionalData = function(error, options){
-    if(options.data && options.data instanceof Function){
+    if(options.data && isFunction(options.data)){
       return options.data(error);
     }
     return options.data;
@@ -58,8 +63,8 @@ module.exports = (function(){
   // will return options, comparing the options with _config, and fills the missing pieces of the options hash with _config values
   // will return options if _config is not defined
   _sneeze.extendOptions = function(options){
-    if(config){
-      return options;
+    if(!config){
+      this.configure();
     }
     for(var attrName in config){
       if(typeof options[attrName] == 'undefined'){

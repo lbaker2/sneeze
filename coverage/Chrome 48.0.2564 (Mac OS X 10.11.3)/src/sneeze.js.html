@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/sneeze.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">src/</a> sneeze.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.66% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>86/97</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">62.75% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>32/51</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>15/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">90.53% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>86/95</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = (function(){
+  var request = require('superagent');
+&nbsp;
+  var _sneeze = {};
+  var config;
+&nbsp;
+  var isFunction = function(functionToCheck) {
+   var getType = {};
+   return functionToCheck &amp;&amp; getType.toString.call(functionToCheck) === '[object Function]';
+  }
+&nbsp;
+  _sneeze.enabled = true;
+&nbsp;
+  /*
+    - Gets the browser type and version if available
+  */
+  _sneeze.browserWithVersion = (function(){
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(!navigator){
+<span class="cstat-no" title="statement not covered" >      return 'No browser information available';</span>
+    }
+    var ua= navigator.userAgent, tem, 
+    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || <span class="branch-1 cbranch-no" title="branch not covered" >[];</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(/trident/i.test(M[1])){
+<span class="cstat-no" title="statement not covered" >        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];</span>
+<span class="cstat-no" title="statement not covered" >        return 'IE '+(tem[1] || '');</span>
+    }
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(M[1]=== 'Chrome'){
+        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(tem!= null) <span class="cstat-no" title="statement not covered" >return tem.slice(1).join(' ').replace('OPR', 'Opera');</span>
+    }
+    M= M[2]? [M[1], M[2]]: <span class="branch-1 cbranch-no" title="branch not covered" >[navigator.appName, navigator.appVersion, '-?'];</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if((tem= ua.match(/version\/(\d+)/i))!= null) <span class="cstat-no" title="statement not covered" >M.splice(1, 1, tem[1]);</span>
+    return M.join(' ');
+  })();
+&nbsp;
+  _sneeze.configure = function(configuration){
+    configuration = configuration || {};
+    config = config || {};
+    config.url = configuration.url || config.url || '/errors';
+    config.data = configuration.data || config.data;
+    // any other configurations can go here
+  }
+&nbsp;
+  // returns a shallow copy of the configuration
+  _sneeze.getConfig = function(){
+    var configuration;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(config){
+      configuration = {};
+      for(var attr in config){
+        configuration[attr] = config[attr];
+      }
+    }
+    return configuration;
+  }
+&nbsp;
+  _sneeze.getAdditionalData = function(error, options){
+    if(options.data &amp;&amp; isFunction(options.data)){
+      return options.data(error);
+    }
+    return options.data;
+  }
+&nbsp;
+  // will return options, comparing the options with _config, and fills the missing pieces of the options hash with _config values
+  // will return options if _config is not defined
+  _sneeze.extendOptions = function(options){
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(!config){
+<span class="cstat-no" title="statement not covered" >      this.configure();</span>
+    }
+    for(var attrName in config){
+      <span class="missing-if-branch" title="else path not taken" >E</span>if(typeof options[attrName] == 'undefined'){
+        options[attrName] = config[attrName];
+      }
+    }
+  }
+&nbsp;
+  /*
+    - Accepts an error object and passes the error to the configured url via POST
+    - Will attempt to post to the server as long as a valid response is returned
+    - Will not attempt further logging if a request to the server returns an error
+  */
+  _sneeze.log = function(error, options){
+    if(!this._enabled){
+      return false;
+    }
+&nbsp;
+    options = options || {};
+&nbsp;
+    this.extendOptions(options);
+    
+    var errorInfo = this.getErrorInfo(error);
+&nbsp;
+    errorInfo.data = this.getAdditionalData(error, options);
+&nbsp;
+    try{
+      this.sendError(errorInfo, options);
+    }catch(e){
+      _sneeze.disable();
+    }
+&nbsp;
+    return true;
+  }
+&nbsp;
+  _sneeze.sendError = <span class="fstat-no" title="function not covered" >function(info, options){</span>
+<span class="cstat-no" title="statement not covered" >    request.post(options.url)</span>
+      .send(info)
+      .end(<span class="fstat-no" title="function not covered" >function(err, response){</span>
+<span class="cstat-no" title="statement not covered" >        if(err){</span>
+<span class="cstat-no" title="statement not covered" >          _sneeze.disable();</span>
+        }
+      });
+  }
+&nbsp;
+  /*
+    Parses an error for 
+      - the event that triggered the error
+      - the source of the error (script)
+      - the line number of the error
+      - the column number of the error
+      - the complete stack of the error
+&nbsp;
+    Will return the parsed error and the user's browser and version
+  */
+&nbsp;
+  _sneeze.getErrorInfo = function(error){
+    var errorInfo = {},
+        stack = error.stack,
+        pieces = stack.split('\n'),
+        src = pieces[pieces.length-1].replace(/(\(*)(\)*)/, '').split(':'),
+        stop = src.length-2,
+        source = '';
+&nbsp;
+    errorInfo.message = pieces[0].trim();
+    
+    source = '';
+    for(var i=0; i &lt; stop; i++){
+      source+=src[i];
+    }
+    errorInfo.event = source.split('(')[0].trim();
+    errorInfo.source = source.split('(')[1].trim();
+    errorInfo.lineno = parseInt(src[src.length-2].trim());
+    errorInfo.colno = parseInt(src[src.length-1].trim().replace(')', ''));
+    errorInfo.stack = stack.trim();
+    errorInfo.browser = this.browserWithVersion;
+&nbsp;
+    return errorInfo;
+  }
+&nbsp;
+  /*
+    - Global watch for errors.
+    - Does not receive errors from functions executed with sneeze.catch
+    - accepts a callback function, but does not wait for sneeze to send the error to the server
+  */
+&nbsp;
+  _sneeze.listen = function(cb, options){
+    var self = this;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(typeof window != 'undefined'){
+      window.onerror = function(message, source, lineno, colno, error){
+        self.processError(error, cb, options);
+      }
+    }else{
+<span class="cstat-no" title="statement not covered" >      process.on('uncaughtException', <span class="fstat-no" title="function not covered" >function(error){</span></span>
+<span class="cstat-no" title="statement not covered" >        self.processError(error, cb, options);</span>
+      });
+    }
+  }
+&nbsp;
+  _sneeze.processError = function(error, cb, options){
+    this.log(error, options);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(cb){
+      cb(error, options);
+    }
+  }
+  /* 
+    - Attempts a function and catches any errors. 
+    - Will execute a callback if passed, but does not wait for sneeze to send the error to the server
+  */
+  _sneeze.catch = function(fn, cb, options){
+    var self = this;
+    try{
+      fn();
+    }catch(e){
+      self.log(e, options);
+      <span class="missing-if-branch" title="else path not taken" >E</span>if(cb){
+        cb(e, options);
+      }
+    }
+  }
+&nbsp;
+  _sneeze.enable = function(){
+    this._enabled = true;
+  }
+&nbsp;
+  _sneeze.disable = function(){
+    this._enabled = false;
+  }
+&nbsp;
+  /* 
+    - Setup default configuration
+  */
+  _sneeze.configure(); 
+&nbsp;
+  return _sneeze;
+})();</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 14 2016 10:59:34 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -27,23 +27,29 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'tests/sneezeSpec.js': [ 'browserify' ]
+      'tests/sneezeSpec.js': [ 'browserify' ],
+      'src/sneeze.js': ['coverage']
     },
 
     browserify: {
       debug: true,
-      configure: function(bundle) {
-        bundle.on('prebundle', function() {
-          bundle.external('foobar');
-        });
-      }
+      "transform": ["browserify-istanbul"]
+    },
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/',
+      "reporters": [
+        {"type": "html"},
+        {"type": "text-summary"}
+      ]
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'html', 'coverage'],
 
 
     // web server port
