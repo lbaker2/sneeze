@@ -151,37 +151,53 @@ module.exports = (function(){
     - accepts a callback function, but does not wait for sneeze to send the error to the server
   */
 
-  _sneeze.listen = function(cb, options){
+  _sneeze.listen = function(options){
     var self = this;
     if(typeof window != 'undefined'){
       window.onerror = function(message, source, lineno, colno, error){
-        self.processError(error, cb, options);
+        self.processError(error, options);
       }
     }else{
       process.on('uncaughtException', function(error){
-        self.processError(error, cb, options);
+        self.processError(error, options);
       });
     }
   }
 
-  _sneeze.processError = function(error, cb, options){
+  _sneeze.processError = function(error, options){
+    var context = options.context || this;
     this.log(error, options);
-    if(cb){
-      cb(error, options);
+    if(options.onError){
+      options.onError.apply(context, [error, options]);
     }
   }
   /* 
     - Attempts a function and catches any errors. 
     - Will execute a callback if passed, but does not wait for sneeze to send the error to the server
   */
-  _sneeze.catch = function(fn, cb, options){
+  _sneeze.catch = function(fn, options){
     var self = this;
-    try{
-      fn();
-    }catch(e){
-      self.log(e, options);
-      if(cb){
-        cb(e, options);
+
+    self.wrapTryCatch(fn, options)();
+  }
+
+  _sneeze.wrapTryCatch = function(fn, options){
+    var self = this;
+    var context = options.context || this;
+
+    return function(){
+      var err = null;
+      try{
+        fn.apply(context, arguments)
+      }catch(e){
+        err = { e: e }
+      }
+
+      if(err){
+        self.log(err.e, options)
+        if(options.onError){
+          options.onError.apply(context, [err.e, options]);
+        }
       }
     }
   }

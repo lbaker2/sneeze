@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">88.68% </span>
+        <span class="strong">89.62% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>94/106</span>
+        <span class='fraction'>95/106</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">63.16% </span>
+        <span class="strong">64.91% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>36/57</span>
+        <span class='fraction'>37/57</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">85% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>17/20</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">89.42% </span>
+        <span class="strong">91.35% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>93/104</span>
+        <span class='fraction'>95/104</span>
       </div>
     </div>
   </div>
@@ -288,8 +288,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -505,12 +505,12 @@
 <span class="cstat-no" title="statement not covered" >        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];</span>
 <span class="cstat-no" title="statement not covered" >        return 'IE '+(tem[1] || '');</span>
     }
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(M[1]=== 'Chrome'){
-<span class="cstat-no" title="statement not covered" >        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);</span>
-<span class="cstat-no" title="statement not covered" >        if(tem!= null) <span class="cstat-no" title="statement not covered" >return tem.slice(1).join(' ').replace('OPR', 'Opera');</span></span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(M[1]=== 'Chrome'){
+        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(tem!= null) <span class="cstat-no" title="statement not covered" >return tem.slice(1).join(' ').replace('OPR', 'Opera');</span>
     }
     M= M[2]? [M[1], M[2]]: <span class="branch-1 cbranch-no" title="branch not covered" >[navigator.appName, navigator.appVersion, '-?'];</span>
-    <span class="missing-if-branch" title="else path not taken" >E</span>if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+    <span class="missing-if-branch" title="if path not taken" >I</span>if((tem= ua.match(/version\/(\d+)/i))!= null) <span class="cstat-no" title="statement not covered" >M.splice(1, 1, tem[1]);</span>
     return M.join(' ');
   })();
 &nbsp;

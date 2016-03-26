@@ -161,14 +161,14 @@ describe('Sneeze', function(){
 	});
 
 	describe('setting up a global error handler', function(){
-		var called = false, callback = function(){ called = true;};
+		var options = { onError: function(){} };
 
 		beforeEach(function(){
 			spyOn(Sneeze, 'log');
 			spyOn(Sneeze, 'processError').and.callThrough();
-			called = false;
+			spyOn(options, 'onError');
 			jasmine.CATCH_EXCEPTIONS = false;
-			Sneeze.listen(callback);
+			Sneeze.listen(options);
 		});
 
 		afterEach(function(){
@@ -177,7 +177,6 @@ describe('Sneeze', function(){
 		});
 
 		it('listens for errors on the window object', function(){
-			
 			window.onerror.call(window);
 			expect(Sneeze.processError).toHaveBeenCalled();
 		});
@@ -187,7 +186,7 @@ describe('Sneeze', function(){
 		});
 		it('can execute a callback', function(){
 			window.onerror.call(window);
-			expect(called).toBe(true);
+			expect(options.onError).toHaveBeenCalled();
 		});
 	});
 
@@ -195,16 +194,15 @@ describe('Sneeze', function(){
 
 		var badCalled = false,
 				badFn = function(){ badCalled = true; throw new Error('Bad!')},
-				called = false,
-				callback = function(){ called = true; };
+				options = { onError: function(){} };
 
 		beforeEach(function(){
-			called = false;
 			badCalled= false;
 			spyOn(Sneeze, 'log');
 			spyOn(Sneeze, 'processError');
+			spyOn(options, 'onError');
 			Sneeze.listen();
-			Sneeze.catch(badFn, callback);
+			Sneeze.catch(badFn, options);
 		});
 
 		afterEach(function(){
@@ -222,7 +220,7 @@ describe('Sneeze', function(){
 			expect(Sneeze.processError).not.toHaveBeenCalled();
 		})
 		it('can execute a callback', function(){
-			expect(called).toBe(true);
+			expect(options.onError).toHaveBeenCalled();
 		});
 	});
 
