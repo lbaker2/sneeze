@@ -4,6 +4,11 @@ module.exports = (function(){
   var _sneeze = {};
   var config;
 
+  var isFunction = function(functionToCheck) {
+   var getType = {};
+   return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+  }
+
   _sneeze.enabled = true;
 
   /*
@@ -49,7 +54,7 @@ module.exports = (function(){
   }
 
   _sneeze.getAdditionalData = function(error, options){
-    if(options.data && options.data instanceof Function){
+    if(options.data && isFunction(options.data)){
       return options.data(error);
     }
     return options.data;
@@ -58,8 +63,8 @@ module.exports = (function(){
   // will return options, comparing the options with _config, and fills the missing pieces of the options hash with _config values
   // will return options if _config is not defined
   _sneeze.extendOptions = function(options){
-    if(config){
-      return options;
+    if(!config){
+      this.configure();
     }
     for(var attrName in config){
       if(typeof options[attrName] == 'undefined'){
@@ -146,37 +151,53 @@ module.exports = (function(){
     - accepts a callback function, but does not wait for sneeze to send the error to the server
   */
 
-  _sneeze.listen = function(cb, options){
+  _sneeze.listen = function(options){
     var self = this;
     if(typeof window != 'undefined'){
       window.onerror = function(message, source, lineno, colno, error){
-        self.processError(error, cb, options);
+        self.processError(error, options);
       }
     }else{
       process.on('uncaughtException', function(error){
-        self.processError(error, cb, options);
+        self.processError(error, options);
       });
     }
   }
 
-  _sneeze.processError = function(error, cb, options){
+  _sneeze.processError = function(error, options){
+    var context = options.context || this;
     this.log(error, options);
-    if(cb){
-      cb(error, options);
+    if(options.onError){
+      options.onError.apply(context, [error, options]);
     }
   }
   /* 
     - Attempts a function and catches any errors. 
     - Will execute a callback if passed, but does not wait for sneeze to send the error to the server
   */
-  _sneeze.catch = function(fn, cb, options){
+  _sneeze.catch = function(fn, options){
     var self = this;
-    try{
-      fn();
-    }catch(e){
-      self.log(e, options);
-      if(cb){
-        cb(e, options);
+
+    self.wrapTryCatch(fn, options)();
+  }
+
+  _sneeze.wrapTryCatch = function(fn, options){
+    var self = this;
+    var context = options.context || this;
+
+    return function(){
+      var err = null;
+      try{
+        fn.apply(context, arguments)
+      }catch(e){
+        err = { e: e }
+      }
+
+      if(err){
+        self.log(err.e, options)
+        if(options.onError){
+          options.onError.apply(context, [err.e, options]);
+        }
       }
     }
   }
