@@ -1485,7 +1485,7 @@ module.exports = (function(){
    return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
   }
 
-  _sneeze.enabled = true;
+  _sneeze._enabled = true;
 
   /*
     - Gets the browser type and version if available
@@ -1617,6 +1617,7 @@ module.exports = (function(){
     errorInfo.colno = parseInt(src[src.length-1].trim().replace(')', ''));
     errorInfo.stack = stack.trim();
     errorInfo.browser = this.browserWithVersion;
+    errorInfo.device = navigator && navigator.userAgent ? navigator.userAgent : 'N/A';
 
     return errorInfo;
   }
@@ -1628,6 +1629,7 @@ module.exports = (function(){
   */
 
   _sneeze.listen = function(options){
+    options = options || {};
     var self = this;
     if(typeof window != 'undefined'){
       window.onerror = function(message, source, lineno, colno, error){
