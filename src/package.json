@@ -1,0 +1,17 @@
+{
+  "name": "sneeze",
+  "version": "1.0.0",
+  "description": "Convenient error logging for uncaught exceptions",
+  "main": "sneeze.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Error"
+  ],
+  "author": "Lawrence Baker <lbaker2@washcoll.edu> (http://www.github.com/lbaker2)",
+  "license": "MIT",
+  "dependencies": {
+    "superagent": "^1.7.2"
+  }
+}
