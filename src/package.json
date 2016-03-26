@@ -1,5 +1,5 @@
 {
-  "name": "sneeze",
+  "name": "sneeze-errors",
   "version": "1.0.0",
   "description": "Convenient error logging for uncaught exceptions",
   "main": "sneeze.js",
@@ -11,6 +11,13 @@
   ],
   "author": "Lawrence Baker <lbaker2@washcoll.edu> (http://www.github.com/lbaker2)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lbaker2/sneeze.git"
+  },
+  "browserDependencies": {
+    "superagent": "^1.7.2"
+  },
   "dependencies": {
     "superagent": "^1.7.2"
   }

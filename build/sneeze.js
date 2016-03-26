@@ -54,8 +54,9 @@ module.exports = (function(){
   }
 
   _sneeze.getAdditionalData = function(error, options){
+    var context = options.context || this;
     if(options.data && isFunction(options.data)){
-      return options.data(error);
+      return options.data.apply(context, error);
     }
     return options.data;
   }
