@@ -170,22 +170,32 @@
 
 	  _sneeze.getErrorInfo = function(error){
 	    var errorInfo = {},
-	        stack = error.stack,
-	        pieces = stack.split('\n'),
-	        src = pieces[pieces.length-1].replace(/(\(*)(\)*)/, '').split(':'),
-	        stop = src.length-2,
-	        source = '';
+	        stack = error.stack;
 
-	    errorInfo.message = pieces[0].trim();
-	    
-	    source = '';
-	    for(var i=0; i < stop; i++){
-	      source+=src[i];
+	    if((/chrome/i).test(this.browserWithVersion)){
+	      var pieces = stack.split('\n'),
+	          src = pieces[pieces.length-1].replace(/(\(*)(\)*)/, '').split(':'),
+	          stop = src.length-2,
+	          source = '';
+
+	      source = '';
+	      for(var i=0; i < stop; i++){
+	        source+=src[i];
+	      }
+
+	      errorInfo.event = source.split('(')[0].trim();
+	      errorInfo.source = source.split('(')[1].trim();
+	      errorInfo.lineno = parseInt(src[src.length-2].trim());
+	      errorInfo.colno = parseInt(src[src.length-1].trim().replace(')', ''));
+
+	    }else if((/firefox/i).test(this.browserWithVersion)){
+	      errorInfo.event = 'N/A';
+	      errorInfo.source = error.fileName;
+	      errorInfo.lineno = error.lineNumber;
+	      errorInfo.colno = error.columnNumber;
 	    }
-	    errorInfo.event = source.split('(')[0].trim();
-	    errorInfo.source = source.split('(')[1].trim();
-	    errorInfo.lineno = parseInt(src[src.length-2].trim());
-	    errorInfo.colno = parseInt(src[src.length-1].trim().replace(')', ''));
+	    
+	    errorInfo.message = error.message;
 	    errorInfo.stack = stack.trim();
 	    errorInfo.browser = this.browserWithVersion;
 	    errorInfo.device = navigator && navigator.userAgent ? navigator.userAgent : 'N/A';
