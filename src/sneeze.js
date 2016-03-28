@@ -160,6 +160,11 @@ module.exports = (function(){
       errorInfo.source = 'N/A';
       errorInfo.lineno = 'N/A';
       errorInfo.colno = 'N/A';
+    }else if((/safari/i).test(this.browserWithVersion)){
+      errorInfo.event = 'N/A';
+      errorInfo.source = error.source;
+      errorInfo.lineno = error.lineno;
+      errorInfo.colno = error.colno;
     }
     return errorInfo;
   }
@@ -175,6 +180,9 @@ module.exports = (function(){
     var self = this;
     if(typeof window != 'undefined'){
       window.onerror = function(message, source, lineno, colno, error){
+        if(!error){
+          error = { message: message, source: source, lineno: lineno, colno: colno, stack: 'N/A'};
+        }
         self.processError(error, options);
       }
     }else{

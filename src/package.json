@@ -1,6 +1,6 @@
 {
   "name": "sneeze-errors",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Convenient error logging for uncaught exceptions",
   "main": "sneeze.js",
   "scripts": {
