@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {module.exports = (function(){
+	/* WEBPACK VAR INJECTION */(function(process) { module.exports = (function(){
 	  var request = __webpack_require__(2);
 
 	  var _sneeze = {};
@@ -177,7 +177,11 @@
 	    errorInfo.message = error.message;
 	    errorInfo.stack = stack.trim();
 	    errorInfo.browser = this.browserWithVersion;
-	    errorInfo.device = typeof navigator != 'undefined' && navigator.userAgent ? navigator.userAgent : 'N/A';
+	    if(typeof navigator != 'undefined'){
+	      error.device = navigator.userAgent ? navigator.userAgent : 'N/A';
+	    }else{
+	      error.device = 'N/A'
+	    }
 
 	    if((/chrome/i).test(this.browserWithVersion) || (/NodeJS/.test(this.browserWithVersion))){
 	      var pieces = stack.split('\n'),

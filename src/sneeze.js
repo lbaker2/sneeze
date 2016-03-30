@@ -1,4 +1,4 @@
-module.exports = (function(){
+ module.exports = (function(){
   var request = require('superagent');
 
   var _sneeze = {};
@@ -131,7 +131,11 @@ module.exports = (function(){
     errorInfo.message = error.message;
     errorInfo.stack = stack.trim();
     errorInfo.browser = this.browserWithVersion;
-    errorInfo.device = typeof navigator != 'undefined' && navigator.userAgent ? navigator.userAgent : 'N/A';
+    if(typeof navigator != 'undefined'){
+      error.device = navigator.userAgent ? navigator.userAgent : 'N/A';
+    }else{
+      error.device = 'N/A'
+    }
 
     if((/chrome/i).test(this.browserWithVersion) || (/NodeJS/.test(this.browserWithVersion))){
       var pieces = stack.split('\n'),
