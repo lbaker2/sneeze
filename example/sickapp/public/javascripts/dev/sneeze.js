@@ -15,9 +15,9 @@ module.exports = (function(){
     - Gets the browser type and version if available
   */
   _sneeze.browserWithVersion = (function(){
-    if(!navigator && typeof process != 'undefined'){
+    if(typeof navigator == 'undefined' && typeof process != 'undefined'){
       return 'NodeJS';
-    }else if(!navigator){
+    }else if(typeof navigator == 'undefined'){
       return 'No browser information available';
     }
     var ua= navigator.userAgent, tem, 
@@ -131,7 +131,7 @@ module.exports = (function(){
     errorInfo.message = error.message;
     errorInfo.stack = stack.trim();
     errorInfo.browser = this.browserWithVersion;
-    errorInfo.device = navigator && navigator.userAgent ? navigator.userAgent : 'N/A';
+    errorInfo.device = typeof navigator != 'undefined' && navigator.userAgent ? navigator.userAgent : 'N/A';
 
     if((/chrome/i).test(this.browserWithVersion) || (/NodeJS/.test(this.browserWithVersion))){
       var pieces = stack.split('\n'),
@@ -160,6 +160,11 @@ module.exports = (function(){
       errorInfo.source = 'N/A';
       errorInfo.lineno = 'N/A';
       errorInfo.colno = 'N/A';
+    }else if((/safari/i).test(this.browserWithVersion)){
+      errorInfo.event = 'N/A';
+      errorInfo.source = error.source;
+      errorInfo.lineno = error.lineno;
+      errorInfo.colno = error.colno;
     }
     return errorInfo;
   }
@@ -175,6 +180,9 @@ module.exports = (function(){
     var self = this;
     if(typeof window != 'undefined'){
       window.onerror = function(message, source, lineno, colno, error){
+        if(!error){
+          error = { message: message, source: source, lineno: lineno, colno: colno, stack: 'N/A'};
+        }
         self.processError(error, options);
       }
     }else{

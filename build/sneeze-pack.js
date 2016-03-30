@@ -61,9 +61,9 @@
 	    - Gets the browser type and version if available
 	  */
 	  _sneeze.browserWithVersion = (function(){
-	    if(!navigator && typeof process != 'undefined'){
+	    if(typeof navigator == 'undefined' && typeof process != 'undefined'){
 	      return 'NodeJS';
-	    }else if(!navigator){
+	    }else if(typeof navigator == 'undefined'){
 	      return 'No browser information available';
 	    }
 	    var ua= navigator.userAgent, tem, 
@@ -177,7 +177,7 @@
 	    errorInfo.message = error.message;
 	    errorInfo.stack = stack.trim();
 	    errorInfo.browser = this.browserWithVersion;
-	    errorInfo.device = navigator && navigator.userAgent ? navigator.userAgent : 'N/A';
+	    errorInfo.device = typeof navigator != 'undefined' && navigator.userAgent ? navigator.userAgent : 'N/A';
 
 	    if((/chrome/i).test(this.browserWithVersion) || (/NodeJS/.test(this.browserWithVersion))){
 	      var pieces = stack.split('\n'),
