@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">77.04% </span>
+        <span class="strong">79.26% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>104/135</span>
+        <span class='fraction'>107/135</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">54.7% </span>
+        <span class="strong">47.01% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>64/117</span>
+        <span class='fraction'>55/117</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">85.71% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>18/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">77.44% </span>
+        <span class="strong">80.45% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>103/133</span>
+        <span class='fraction'>107/133</span>
       </div>
     </div>
   </div>
@@ -325,8 +325,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -434,38 +434,38 @@
 <span class="cline-any cline-yes">8×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">12×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">8×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -577,12 +577,12 @@
 <span class="cstat-no" title="statement not covered" >        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];</span>
 <span class="cstat-no" title="statement not covered" >        return 'IE '+(tem[1] || '');</span>
     }
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(M[1]=== 'Chrome'){
-<span class="cstat-no" title="statement not covered" >        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);</span>
-<span class="cstat-no" title="statement not covered" >        if(tem!= null) <span class="cstat-no" title="statement not covered" >return tem.slice(1).join(' ').replace('OPR', 'Opera');</span></span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(M[1]=== 'Chrome'){
+        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(tem!= null) <span class="cstat-no" title="statement not covered" >return tem.slice(1).join(' ').replace('OPR', 'Opera');</span>
     }
     M= M[2]? [M[1], M[2]]: <span class="branch-1 cbranch-no" title="branch not covered" >[navigator.appName, navigator.appVersion, '-?'];</span>
-    <span class="missing-if-branch" title="else path not taken" >E</span>if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+    <span class="missing-if-branch" title="if path not taken" >I</span>if((tem= ua.match(/version\/(\d+)/i))!= null) <span class="cstat-no" title="statement not covered" >M.splice(1, 1, tem[1]);</span>
     return M.join(' ');
   })();
 &nbsp;
@@ -686,39 +686,39 @@
     errorInfo.stack = stack.trim();
     errorInfo.browser = this.browserWithVersion;
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if((/chrome/i).test(this.browserWithVersion) || (/NodeJS/.test(this.browserWithVersion))){
-<span class="cstat-no" title="statement not covered" >      var pieces = stack.split('\n'),</span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if((/chrome/i).test(this.browserWithVersion) || (<span class="branch-1 cbranch-no" title="branch not covered" >/NodeJS/.test(this.browserWithVersion))</span>){
+      var pieces = stack.split('\n'),
           src = pieces[pieces.length-1].replace(/(\(*)(\)*)/, '').split(':'),
           stop = src.length-2,
           source = '';
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      source = '';</span>
-<span class="cstat-no" title="statement not covered" >      for(var i=0; i &lt; stop; i++){</span>
-<span class="cstat-no" title="statement not covered" >        source+=src[i];</span>
+      source = '';
+      for(var i=0; i &lt; stop; i++){
+        source+=src[i];
       }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if(source.length){</span>
-<span class="cstat-no" title="statement not covered" >        errorInfo.event = source.split('(')[0].trim();</span>
-<span class="cstat-no" title="statement not covered" >        errorInfo.source = source.split('(')[1].trim();</span>
-<span class="cstat-no" title="statement not covered" >        errorInfo.lineno = parseInt(src[src.length-2].trim());</span>
-<span class="cstat-no" title="statement not covered" >        errorInfo.colno = parseInt(src[src.length-1].trim().replace(')', ''));</span>
+      if(source.length){
+        errorInfo.event = source.split('(')[0].trim();
+        errorInfo.source = source.split('(')[1].trim();
+        errorInfo.lineno = parseInt(src[src.length-2].trim());
+        errorInfo.colno = parseInt(src[src.length-1].trim().replace(')', ''));
       }
-    }else <span class="missing-if-branch" title="if path not taken" >I</span>if((/firefox/i).test(this.browserWithVersion)){
+    }else <span class="cstat-no" title="statement not covered" >if((/firefox/i).test(this.browserWithVersion)){</span>
 <span class="cstat-no" title="statement not covered" >      errorInfo.event = 'N/A';</span>
 <span class="cstat-no" title="statement not covered" >      errorInfo.source = error.fileName &amp;&amp; error.fileName.toString().length? error.fileName : 'N/A';</span>
 <span class="cstat-no" title="statement not covered" >      errorInfo.lineno = error.lineNumber &amp;&amp; error.lineNumber.toString().length? error.lineNumber : 'N/A';</span>
 <span class="cstat-no" title="statement not covered" >      errorInfo.colno = error.columnNumber &amp;&amp; error.columnNumber.toString().length? error.columnNumber : 'N/A';</span>
-    }else <span class="missing-if-branch" title="if path not taken" >I</span>if((/IE/.test(this.browserWithVersion)) || (/msie/.test(this.browserWithVersion))){
+    }else <span class="cstat-no" title="statement not covered" >if((/IE/.test(this.browserWithVersion)) || (/msie/.test(this.browserWithVersion))){</span>
 <span class="cstat-no" title="statement not covered" >      errorInfo.message = error.description &amp;&amp; error.description.toString().length? error.description : 'N/A';</span>
 <span class="cstat-no" title="statement not covered" >      errorInfo.event = 'N/A';</span>
 <span class="cstat-no" title="statement not covered" >      errorInfo.source = 'N/A';</span>
 <span class="cstat-no" title="statement not covered" >      errorInfo.lineno = 'N/A';</span>
 <span class="cstat-no" title="statement not covered" >      errorInfo.colno = 'N/A';</span>
-    }else <span class="missing-if-branch" title="else path not taken" >E</span>if((/safari/i).test(this.browserWithVersion)){
-      errorInfo.event = 'N/A';
-      errorInfo.source = error.source &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >error.source.toString().length?</span> <span class="branch-0 cbranch-no" title="branch not covered" >error.source </span>: 'N/A';
-      errorInfo.lineno = error.lineno &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >error.lineno.toString().length?</span> <span class="branch-0 cbranch-no" title="branch not covered" >error.lineno </span>: 'N/A';
-      errorInfo.colno = error.colno &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >error.colno.toString().length?</span> <span class="branch-0 cbranch-no" title="branch not covered" >error.colno </span>: 'N/A';
+    }else <span class="cstat-no" title="statement not covered" >if((/safari/i).test(this.browserWithVersion)){</span>
+<span class="cstat-no" title="statement not covered" >      errorInfo.event = 'N/A';</span>
+<span class="cstat-no" title="statement not covered" >      errorInfo.source = error.source &amp;&amp; error.source.toString().length? error.source : 'N/A';</span>
+<span class="cstat-no" title="statement not covered" >      errorInfo.lineno = error.lineno &amp;&amp; error.lineno.toString().length? error.lineno : 'N/A';</span>
+<span class="cstat-no" title="statement not covered" >      errorInfo.colno = error.colno &amp;&amp; error.colno.toString().length? error.colno : 'N/A';</span>
     }
     return errorInfo;
   }

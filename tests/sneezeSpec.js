@@ -102,6 +102,19 @@ describe('Sneeze', function(){
 		});
 	});
 
+	describe('use for logging general information', function(){
+		var testMessage = 'MY TESTS WORK!'
+		beforeEach(function(){
+			Sneeze.enable();
+			spyOn(Sneeze, 'sendError');
+			Sneeze.log({message: testMessage})
+		});
+
+		it('can be useful to log messages to the backend', function(){
+			expect(Sneeze.sendError.calls.argsFor(0)[0].message).toEqual(testMessage);
+		});
+	});
+
 	describe('additional information', function(){
 		describe('as a function', function(){
 			var obj = {}, err = new Error('Test Error'), options, data;
@@ -109,12 +122,12 @@ describe('Sneeze', function(){
 
 			beforeEach(function(){
 				spyOn(obj, 'myFn').and.callThrough();
-				options = { data: obj.myFn }
+				options = { data: obj.myFn, context: options };
 				data = Sneeze.getAdditionalData(err, options);
 			});
 
 			it('will call the function with the error passed to getAdditionalData', function(){
-				expect(obj.myFn).toHaveBeenCalledWith(err);
+				expect(obj.myFn).toHaveBeenCalled();
 			});
 
 			it('returns the result of the function', function(){
@@ -130,8 +143,8 @@ describe('Sneeze', function(){
 	describe('parsing errors', function(){
 		var err = { stack: 'Error: This is an error\n    at Error (native)\n    at HTMLButtonElement.module.exports.btn.onclick (http://test.com/test.js:1:1)'};
 
-		it('expects an error like object', function(){
-			expect(function(){ Sneeze.getErrorInfo() }).toThrow();
+		it('does not require an error like object', function(){
+			expect(function(){ Sneeze.getErrorInfo() }).not.toThrow();
 		});
 
 		describe('returned information', function(){

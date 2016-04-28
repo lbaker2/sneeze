@@ -1673,6 +1673,7 @@ module.exports = request;
 
     errorInfo.data = this.getAdditionalData(error, options);
 
+    errorInfo.device = this.getDeviceInfo();
     try{
       this.sendError(errorInfo, options);
     }catch(e){
@@ -1704,17 +1705,14 @@ module.exports = request;
   */
 
   _sneeze.getErrorInfo = function(error){
+    error = error || {};
+    
     var errorInfo = {},
         stack = error.stack || '';
 
     errorInfo.message = error.message;
     errorInfo.stack = stack.trim();
     errorInfo.browser = this.browserWithVersion;
-    if(typeof navigator != 'undefined'){
-      error.device = navigator.userAgent ? navigator.userAgent : 'N/A';
-    }else{
-      error.device = 'N/A'
-    }
 
     if((/chrome/i).test(this.browserWithVersion) || (/NodeJS/.test(this.browserWithVersion))){
       var pieces = stack.split('\n'),
@@ -1727,31 +1725,35 @@ module.exports = request;
         source+=src[i];
       }
 
-      errorInfo.event = source.split('(')[0].trim();
-      errorInfo.source = source.split('(')[1].trim();
-      errorInfo.lineno = parseInt(src[src.length-2].trim());
-      errorInfo.colno = parseInt(src[src.length-1].trim().replace(')', ''));
-
+      if(source.length){
+        errorInfo.event = source.split('(')[0].trim();
+        errorInfo.source = source.split('(')[1].trim();
+        errorInfo.lineno = parseInt(src[src.length-2].trim());
+        errorInfo.colno = parseInt(src[src.length-1].trim().replace(')', ''));
+      }
     }else if((/firefox/i).test(this.browserWithVersion)){
       errorInfo.event = 'N/A';
-      errorInfo.source = error.fileName;
-      errorInfo.lineno = error.lineNumber;
-      errorInfo.colno = error.columnNumber;
+      errorInfo.source = error.fileName && error.fileName.toString().length? error.fileName : 'N/A';
+      errorInfo.lineno = error.lineNumber && error.lineNumber.toString().length? error.lineNumber : 'N/A';
+      errorInfo.colno = error.columnNumber && error.columnNumber.toString().length? error.columnNumber : 'N/A';
     }else if((/IE/.test(this.browserWithVersion)) || (/msie/.test(this.browserWithVersion))){
-      errorInfo.message = error.description;
+      errorInfo.message = error.description && error.description.toString().length? error.description : 'N/A';
       errorInfo.event = 'N/A';
       errorInfo.source = 'N/A';
       errorInfo.lineno = 'N/A';
       errorInfo.colno = 'N/A';
     }else if((/safari/i).test(this.browserWithVersion)){
       errorInfo.event = 'N/A';
-      errorInfo.source = error.source;
-      errorInfo.lineno = error.lineno;
-      errorInfo.colno = error.colno;
+      errorInfo.source = error.source && error.source.toString().length? error.source : 'N/A';
+      errorInfo.lineno = error.lineno && error.lineno.toString().length? error.lineno : 'N/A';
+      errorInfo.colno = error.colno && error.colno.toString().length? error.colno : 'N/A';
     }
     return errorInfo;
   }
 
+  _sneeze.getDeviceInfo = function(){
+    return typeof navigator != 'undefined' && navigator.userAgent ? navigator.userAgent : 'N/A';
+  }
   /*
     - Global watch for errors.
     - Does not receive errors from functions executed with sneeze.catch
@@ -1828,5 +1830,6 @@ module.exports = request;
 
   return _sneeze;
 })();
+
 }).call(this,require('_process'))
 },{"_process":1,"superagent":4}]},{},[8]);
