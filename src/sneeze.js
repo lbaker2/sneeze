@@ -125,6 +125,7 @@
   */
 
   _sneeze.getErrorInfo = function(error){
+    error = error || {};
     var errorInfo = {},
         stack = error.stack || '';
 
@@ -132,9 +133,9 @@
     errorInfo.stack = stack.trim();
     errorInfo.browser = this.browserWithVersion;
     if(typeof navigator != 'undefined'){
-      error.device = navigator.userAgent ? navigator.userAgent : 'N/A';
+      errorInfo.device = navigator.userAgent ? navigator.userAgent : 'N/A';
     }else{
-      error.device = 'N/A'
+      errorInfo.device = 'N/A'
     }
 
     if((/chrome/i).test(this.browserWithVersion) || (/NodeJS/.test(this.browserWithVersion))){
